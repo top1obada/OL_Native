@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:my_widgets/Validators/vd_not_empty.dart';
+import 'package:my_widgets/Validators/vd_password.dart';
+
+class WDNativePasswordTextFormField extends StatelessWidget {
+  const WDNativePasswordTextFormField({super.key, required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 16,
+        ),
+      ),
+      validator: (value) {
+        String? validValue = EmptyValidator.validateNotEmpty(value, 'password');
+
+        if (validValue != null) return validValue;
+
+        validValue = PasswordValidator.validatePassword(value);
+
+        if (validValue != null) return validValue;
+
+        return null;
+      },
+    );
+  }
+}
