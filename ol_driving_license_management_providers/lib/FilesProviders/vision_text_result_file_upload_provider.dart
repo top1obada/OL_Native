@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ol_driving_license_management_connect_api/FilesConnect/vision_test_result_upload_connect.dart';
-import 'package:ol_driving_license_management_dto/VisionTestRequestDTO/VisionTestResult.dart';
 
 class PVVisionTestResultFileUpload extends ChangeNotifier {
   bool _isUploaded = false;

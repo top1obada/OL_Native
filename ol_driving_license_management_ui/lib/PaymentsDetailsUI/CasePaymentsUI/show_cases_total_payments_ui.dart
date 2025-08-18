@@ -9,7 +9,7 @@ import 'package:ol_driving_license_management_widgets/CaseWidgets/CasePaymentsWi
 class UIShowCasesTotalPayments extends StatefulWidget {
   const UIShowCasesTotalPayments({super.key, required this.traineeID});
 
-  final int traineeID;
+  final int? traineeID;
 
   @override
   State<UIShowCasesTotalPayments> createState() => _UIShowCasesTotalPayments();

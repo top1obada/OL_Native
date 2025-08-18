@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class UIShowCasesDetails extends StatefulWidget {
   const UIShowCasesDetails({super.key, required this.traineeID, this.onTab});
 
-  final int traineeID;
+  final int? traineeID;
 
   final Function(ClsCaseDTO?)? onTab;
 
@@ -36,6 +36,15 @@ class _UIShowCasesDetailsState extends State<UIShowCasesDetails> {
         builder: (context, pvCases, child) {
           if (pvCases.casesList == null) {
             return const Center(child: CircularProgressIndicator());
+          }
+
+          if (pvCases.casesList!.isEmpty) {
+            return Center(
+              child: Text(
+                "No Result Found, You Cant Create Test Request Before Creating License Case !",
+                style: TextStyle(fontSize: 16),
+              ),
+            );
           }
 
           return Padding(

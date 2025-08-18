@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ol_driving_license_management_providers/AppoitementProviders/appoitement_Provider.dart';
 import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/base_current_login_info_provider.dart';
 import 'package:ol_driving_license_management_providers/CaseProviders/PaymentsProviders/cases_total_payments_provider.dart';
 import 'package:ol_driving_license_management_providers/FilesProviders/vision_text_result_file_upload_provider.dart';
 import 'package:ol_driving_license_management_providers/LicensesProviders/GetAllTraineeLicenseProvider.dart';
 import 'package:ol_driving_license_management_providers/TraineeProviders/trainee_requests_provider.dart';
+import 'package:ol_driving_license_management_ui/AppoitementUI/show_trainee_appoitements_ui.dart';
 
 import 'package:ol_driving_license_management_ui/LicensesUI/TraineeLicenseUI.dart';
+import 'package:ol_driving_license_management_ui/LoginUI/login_screen_ui.dart';
 import 'package:ol_driving_license_management_ui/PaymentsDetailsUI/CasePaymentsUI/show_cases_total_payments_ui.dart';
 import 'package:ol_driving_license_management_ui/RequestsUI/requests_main_menu_ui.dart';
 import 'package:ol_driving_license_management_ui/completed_person_ui/show_completed_person_ui.dart';
@@ -61,10 +64,13 @@ class BaseDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UIShowCompletedPerson(
-                        personID:
-                            loggedInInfo.currentLoginInformationDTO!.personID!,
-                      ),
+                      builder:
+                          (context) => UIShowCompletedPerson(
+                            personID:
+                                loggedInInfo
+                                    .currentLoginInformationDTO!
+                                    .personID!,
+                          ),
                     ),
                   );
                 },
@@ -78,15 +84,16 @@ class BaseDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider.value(value: loggedInInfo),
-                          ChangeNotifierProvider(
-                            create: (con) => PVUserRequests(),
+                      builder:
+                          (context) => MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider.value(value: loggedInInfo),
+                              ChangeNotifierProvider(
+                                create: (con) => PVUserRequests(),
+                              ),
+                            ],
+                            child: const UIRequestsMainMenu(),
                           ),
-                        ],
-                        child: const UIRequestsMainMenu(),
-                      ),
                     ),
                   );
                 },
@@ -100,15 +107,16 @@ class BaseDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (con) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider.value(value: loggedInInfo),
-                          ChangeNotifierProvider(
-                            create: (context) => PVTraineeLicenses(),
+                      builder:
+                          (con) => MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider.value(value: loggedInInfo),
+                              ChangeNotifierProvider(
+                                create: (context) => PVTraineeLicenses(),
+                              ),
+                            ],
+                            child: const UIShowTraineeLicensesDetails(),
                           ),
-                        ],
-                        child: const UIShowTraineeLicensesDetails(),
-                      ),
                     ),
                   );
                 },
@@ -125,7 +133,23 @@ class BaseDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.event_available, color: Colors.teal),
                 title: const Text('My Appointments'),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (con) => MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider(
+                                create: (c) => PVTraineeAppoitements(),
+                              ),
+                              ChangeNotifierProvider.value(value: loggedInInfo),
+                            ],
+                            child: UIShowTraineeAppoitements(),
+                          ),
+                    ),
+                  );
+                },
               ),
 
               // Payments
@@ -145,9 +169,10 @@ class BaseDrawer extends StatelessWidget {
                             ),
                           ],
                           child: UIShowCasesTotalPayments(
-                            traineeID: loggedInInfo
-                                .currentLoginInformationDTO!
-                                .traineeID!,
+                            traineeID:
+                                loggedInInfo
+                                    .currentLoginInformationDTO!
+                                    .traineeID,
                           ),
                         );
                       },
@@ -164,16 +189,17 @@ class BaseDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (con) => MultiProvider(
-                        providers: [
-                          ChangeNotifierProvider.value(value: loggedInInfo),
-                          ChangeNotifierProvider(
-                            create: (con) => PVVisionTestResultFileUpload(),
+                      builder:
+                          (con) => MultiProvider(
+                            providers: [
+                              ChangeNotifierProvider.value(value: loggedInInfo),
+                              ChangeNotifierProvider(
+                                create: (con) => PVVisionTestResultFileUpload(),
+                              ),
+                            ],
+                            child:
+                                const UIUploadVisionTestResult(), // Make sure to create this UI component
                           ),
-                        ],
-                        child:
-                            const UIUploadVisionTestResult(), // Make sure to create this UI component
-                      ),
                     ),
                   );
                 },
@@ -199,7 +225,21 @@ class BaseDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.exit_to_app, color: Colors.red),
                 title: const Text('Logout'),
-                onTap: () {},
+                onTap: () {
+                  loggedInInfo.clear();
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (con) => ChangeNotifierProvider(
+                            create: (c) => PVLogin(),
+                            child: LoginScreenUI(),
+                          ),
+                    ),
+                    (Route<dynamic> rr) => false,
+                  );
+                },
               ),
             ],
           ),

@@ -16,6 +16,12 @@ class PVBaseCurrentLogin extends ChangeNotifier {
   PVBaseCurrentLogin() {
     _currentLoginInformationDTO = ClsCurrentLoginInformationDTO();
   }
+
+  void clear() {
+    _currentLoginInformationDTO = null;
+    DioClient.clearHeaders();
+    notifyListeners();
+  }
 }
 
 class PVLogin extends PVBaseCurrentLogin {
@@ -32,12 +38,6 @@ class PVLogin extends PVBaseCurrentLogin {
     }
 
     return false;
-  }
-
-  void clear() {
-    _currentLoginInformationDTO = null;
-    DioClient.clearHeaders();
-    notifyListeners();
   }
 }
 
@@ -57,11 +57,5 @@ class PVSignUp extends PVBaseCurrentLogin {
     }
 
     return false;
-  }
-
-  void clear() {
-    _currentLoginInformationDTO = null;
-    DioClient.clearHeaders();
-    notifyListeners();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:ol_driving_license_management_connect_api/Settings/general_connect.dart';
-import 'package:ol_driving_license_management_dto/RequestsDTO/DrivingLicenseRequestsDTO/new_driving_license_request.dart';
 import 'package:ol_driving_license_management_dto/RequestsDTO/InternationalDrivingLicenseRequestDTO/InternationalDrivingLicenseRequestDTO.dart';
 
 class Internationaldrivinglicenserequestconnect {

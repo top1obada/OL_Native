@@ -208,7 +208,7 @@ class _UIRequestsMainMenu extends State<UIRequestsMainMenu> {
                                           traineeID:
                                               currentbase
                                                   .currentLoginInformationDTO!
-                                                  .traineeID!,
+                                                  .traineeID,
                                           onTab:
                                               (c) => Navigator.push(
                                                 context,
@@ -265,7 +265,7 @@ class _UIRequestsMainMenu extends State<UIRequestsMainMenu> {
                                           traineeID:
                                               currentbase
                                                   .currentLoginInformationDTO!
-                                                  .traineeID!,
+                                                  .traineeID,
                                           onTab:
                                               (c) => Navigator.push(
                                                 context,
@@ -315,9 +315,11 @@ class _UIRequestsMainMenu extends State<UIRequestsMainMenu> {
               }
 
               if (value.userRequests!.isEmpty) {
-                return Text(
-                  "There Is No Requests",
-                  style: TextStyle(fontSize: 12),
+                return Center(
+                  child: Text(
+                    "There Is No Requests",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 );
               }
 

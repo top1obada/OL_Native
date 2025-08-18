@@ -119,7 +119,7 @@ class WDTraineeLicenseDetailsRequest extends StatelessWidget {
     if (expirationDate.isBefore(now)) return 'EXPIRED';
     final daysLeft = expirationDate.difference(now).inDays;
     if (daysLeft < 30) return 'Expires in $daysLeft days';
-    return 'Valid (${daysLeft} days remaining)';
+    return 'Valid ($daysLeft days remaining)';
   }
 
   Widget _buildLicenseStatusIcon(DateTime? expirationDate) {

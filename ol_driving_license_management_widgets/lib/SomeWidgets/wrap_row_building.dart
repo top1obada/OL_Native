@@ -20,7 +20,7 @@ class BuildRowWrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Wrap(
           direction: Axis.horizontal,

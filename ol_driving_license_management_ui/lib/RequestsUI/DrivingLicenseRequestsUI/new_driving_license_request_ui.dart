@@ -48,7 +48,7 @@ class UINewDrivingLicenseRequest extends StatelessWidget {
 }
 
 class _UINewDrivingLicenseRequest extends StatefulWidget {
-  const _UINewDrivingLicenseRequest({super.key});
+  const _UINewDrivingLicenseRequest();
 
   @override
   State<StatefulWidget> createState() => __UINewDrivingLicenseRequest();

@@ -29,7 +29,7 @@ class WDGenderSelector extends StatelessWidget {
 }
 
 class _WDGenderSelector extends StatefulWidget {
-  const _WDGenderSelector({super.key, required this.onChanged, this.initVal});
+  const _WDGenderSelector({required this.onChanged, this.initVal});
 
   final ValueChanged<String> onChanged;
   final String? initVal;

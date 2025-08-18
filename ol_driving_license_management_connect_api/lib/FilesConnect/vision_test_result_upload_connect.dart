@@ -14,17 +14,22 @@ class VisionTestResultUploadConnect {
   }) async {
     try {
       final formData = FormData.fromMap({
-        // no MultipartFile
         'File': await MultipartFile.fromFile(
+          // F كبيرة
           file.path,
           filename: file.path.split('/').last,
+          contentType: MediaType('application', 'pdf'),
         ),
       });
 
       final response = await DioClient.dio.post(
         'VisionTestResult/$userID',
         data: formData,
-        options: Options(contentType: 'multipart/form-data'),
+        options: Options(
+          contentType: 'multipart/form-data',
+          sendTimeout: const Duration(minutes: 2),
+          receiveTimeout: const Duration(minutes: 2),
+        ),
       );
 
       return response.statusCode == 200;

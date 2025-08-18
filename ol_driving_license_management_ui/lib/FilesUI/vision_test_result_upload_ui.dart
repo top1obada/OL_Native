@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:ol_driving_license_management_dto/VisionTestRequestDTO/VisionTestResult.dart';
+
 import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/base_current_login_info_provider.dart';
 import 'package:ol_driving_license_management_providers/FilesProviders/vision_text_result_file_upload_provider.dart';
 import 'package:ol_driving_license_management_ui/UIWidgets/const_scaffold.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BuildInfoRow extends StatelessWidget {
   const BuildInfoRow({super.key, required this.label, required this.value});

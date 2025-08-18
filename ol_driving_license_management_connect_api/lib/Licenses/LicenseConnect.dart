@@ -1,5 +1,4 @@
 import 'package:ol_driving_license_management_connect_api/Settings/general_connect.dart';
-import 'package:ol_driving_license_management_dto/CaseDTO/PaymentsDTO/case_payment_details_dto.dart';
 import 'package:ol_driving_license_management_dto/LicensesDTOs/TraineeLicenseDTO.dart';
 
 class LicensesConnect {

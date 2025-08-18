@@ -185,10 +185,12 @@ class WDTraineeLicenseDetails extends StatelessWidget {
 
   Color _getExpirationBackgroundColor(DateTime? expirationDate) {
     final color = _getExpirationColor(expirationDate);
-    if (color == Colors.red[600])
+    if (color == Colors.red[600]) {
       return const Color(0x33FF5252); // Red with 20% opacity
-    if (color == Colors.orange[600])
+    }
+    if (color == Colors.orange[600]) {
       return const Color(0x33FF9800); // Orange with 20% opacity
+    }
     return const Color(0x334CAF50); // Green with 20% opacity
   }
 

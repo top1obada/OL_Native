@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/base_current_login_info_provider.dart';
-import 'package:ol_driving_license_management_providers/LicensesProviders/FindTraineeLicenseProvider.dart';
 
 import 'package:ol_driving_license_management_providers/LicensesProviders/GetAllTraineeLicenseProvider.dart';
-import 'package:ol_driving_license_management_providers/RequestsProviders/InternationalDrivingLicenseRequestProviders/CreateInternationalDrivingLicenseRequestProvider.dart';
-import 'package:ol_driving_license_management_ui/InternationalDrivingLicenseRequestUI/InternationalDrivingLicenseRequestUI.dart';
 
 import 'package:ol_driving_license_management_ui/UIWidgets/const_scaffold.dart';
 import 'package:ol_driving_license_management_widgets/CaseWidgets/show_cases_widget.dart';
@@ -31,18 +28,18 @@ class _UIShowTraineeLicensesDetailsState
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var pvTraineeLicenses = context.read<PVTraineeLicenses>();
+
       await pvTraineeLicenses.getTraineeLicenses(
         context
             .read<PVBaseCurrentLogin>()
             .currentLoginInformationDTO!
-            .traineeID!,
+            .traineeID,
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var baseCurrent = context.read<PVBaseCurrentLogin>();
     return BaseScaffold(
       title: "Trainee Licenses Details",
       body: Padding(

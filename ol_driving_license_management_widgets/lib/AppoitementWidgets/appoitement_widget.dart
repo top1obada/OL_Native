@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:ol_driving_license_management_dto/CaseDTO/case_dto.dart';
+import 'package:ol_driving_license_management_dto/AppoitementDTO/trainee_appoitement_dto.dart';
 
-class WDCaseDetails extends StatelessWidget {
-  const WDCaseDetails({super.key, required this.caseDTO, this.onTab});
+class WDTraineeAppoitement extends StatelessWidget {
+  const WDTraineeAppoitement({
+    super.key,
+    required this.appoitementDTO,
+    this.onTap,
+  });
 
-  final ClsCaseDTO caseDTO;
+  final ClsTraineeAppoitementDTO appoitementDTO;
+  final Function(ClsTraineeAppoitementDTO?)? onTap;
 
-  final Function(ClsCaseDTO?)? onTab;
-
-  Color _getStatusColor(EnCaseState? state) {
+  Color _getStatusColor(EnAppoitementState? state) {
     if (state == null) return Colors.grey;
 
     switch (state) {
-      case EnCaseState.eActive:
-        return Colors.green;
-      case EnCaseState.eCanceled:
+      case EnAppoitementState.ePending:
+        return Colors.orange;
+      case EnAppoitementState.eCancled:
         return Colors.red;
-      case EnCaseState.eCompleted: // Changed from 'finished' to match your enum
-        return Colors.blue;
+      case EnAppoitementState.eCompleated:
+        return Colors.green;
       default:
         return Colors.grey;
     }
@@ -25,16 +28,16 @@ class WDCaseDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = _getStatusColor(caseDTO.caseState);
+    final statusColor = _getStatusColor(appoitementDTO.appoitementState);
 
     return Card(
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: ListTile(
-          leading: const Icon(Icons.folder_open, color: Colors.blue),
+          leading: const Icon(Icons.calendar_today, color: Colors.blue),
           title: Text(
-            "Case ID: ${caseDTO.caseID ?? 'N/A'}",
+            "Appointment ID: ${appoitementDTO.appoitementID ?? 'N/A'}",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -44,15 +47,15 @@ class WDCaseDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Case Name: ${caseDTO.licenseTypeName ?? '-'}",
+                "Test Type: ${appoitementDTO.testTypeName ?? '-'}",
                 style: TextStyle(color: Colors.blueGrey[800]),
               ),
               Text(
-                "Started: ${caseDTO.startedDate != null ? caseDTO.startedDate!.toLocal().toString().split(' ')[0] : '-'}",
-                style: TextStyle(color: Colors.grey[800]),
+                "License Type: ${appoitementDTO.licenseTypeName ?? '-'}",
+                style: TextStyle(color: Colors.blueGrey[800]),
               ),
               Text(
-                "Finished: ${caseDTO.finishedDate != null ? caseDTO.finishedDate!.toLocal().toString().split(' ')[0] : '-'}",
+                "Date: ${appoitementDTO.appoitementDate != null ? appoitementDTO.appoitementDate!.toLocal().toString().split(' ')[0] : '-'}",
                 style: TextStyle(color: Colors.grey[800]),
               ),
             ],
@@ -63,7 +66,7 @@ class WDCaseDetails extends StatelessWidget {
               Icon(Icons.circle, color: statusColor, size: 12),
               const SizedBox(height: 4),
               Text(
-                caseDTO.caseState?.toString() ?? '-',
+                appoitementDTO.appoitementState?.toString() ?? '-',
                 style: TextStyle(
                   color: statusColor,
                   fontWeight: FontWeight.bold,
@@ -72,7 +75,7 @@ class WDCaseDetails extends StatelessWidget {
             ],
           ),
           onTap: () {
-            onTab?.call(caseDTO);
+            onTap?.call(appoitementDTO);
           },
         ),
       ),

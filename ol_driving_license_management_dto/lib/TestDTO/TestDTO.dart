@@ -1,5 +1,4 @@
 // test_dto.dart
-import 'package:ol_driving_license_management_dto/RequestsDTO/base_Request_dto.dart';
 
 class ClsTestDTO {
   int? testID;

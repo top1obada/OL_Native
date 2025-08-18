@@ -5,7 +5,13 @@ import 'package:ol_driving_license_management_dto/CaseDTO/PaymentsDTO/case_total
 class PVCasesTotalPayment extends ChangeNotifier {
   List<ClsCaseTotalPaymentsDTO>? casesTotalPayments;
 
-  Future<void> getCasesTotalPayments(int traineeID) async {
+  Future<void> getCasesTotalPayments(int? traineeID) async {
+    if (traineeID == null) {
+      casesTotalPayments = [];
+      notifyListeners();
+      return;
+    }
+
     casesTotalPayments = await CaseTotalPaymentsConnect.getCasesByTraineeID(
       traineeID,
     );
