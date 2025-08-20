@@ -40,7 +40,7 @@ class _LoginScreenUIState extends State<LoginScreenUI> {
     if (result) {
       PVBaseCurrentLogin currentLogin = context.read<PVLogin>();
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder:

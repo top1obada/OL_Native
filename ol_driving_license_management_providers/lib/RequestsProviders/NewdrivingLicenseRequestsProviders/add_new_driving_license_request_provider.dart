@@ -19,6 +19,8 @@ class PVNewDrivingLicenseRequest extends ChangeNotifier {
       return;
     }
 
+    newDrivingLicenseRequestDTO!.requestID = -1;
+
     newDrivingLicenseRequestDTO?.requestDate = DateTime.now();
 
     newDrivingLicenseRequestDTO!

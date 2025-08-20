@@ -7,6 +7,7 @@ class BaseScaffold extends StatelessWidget {
     required this.title,
     required this.body,
     this.bottomNavigationBar,
+    this.hasLeading = false,
   });
 
   final String title;
@@ -14,11 +15,20 @@ class BaseScaffold extends StatelessWidget {
 
   final Widget? bottomNavigationBar;
 
+  final bool? hasLeading;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        leading:
+            hasLeading!
+                ? IconButton(
+                  onPressed: () => {Navigator.pop(context)},
+                  icon: Icon(Icons.arrow_back),
+                )
+                : null,
         centerTitle: true,
         actions: [
           IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
@@ -26,6 +36,7 @@ class BaseScaffold extends StatelessWidget {
       ),
       drawer: const BaseDrawer(),
       body: body,
+
       bottomNavigationBar: bottomNavigationBar,
     );
   }

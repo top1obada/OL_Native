@@ -94,53 +94,55 @@ class _UITestRequestState extends State<UITestRequest> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton.icon(
-            onPressed: () async {
-              final pro = context.read<PVTestRequestProvider>();
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: ElevatedButton.icon(
+              onPressed: () async {
+                final pro = context.read<PVTestRequestProvider>();
 
-              if (pro.testRequestDTO?.requestID != null) {
-                return;
-              }
+                if (pro.testRequestDTO?.requestID != null) {
+                  return;
+                }
 
-              await pro.post();
+                await pro.post();
 
-              if (pro.testRequestDTO?.requestID != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Request submitted successfully!'),
-                    backgroundColor: Colors.green,
-                    duration: Duration(seconds: 2), // Show for 2 seconds
-                  ),
-                );
-
-                // Close the screen after 2 seconds
-                Future.delayed(const Duration(seconds: 2), () {
-                  if (mounted) {
-                    Navigator.of(context).pop(); // Close the current screen
-                  }
-                });
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Failed to submit the request. Please try again.',
+                if (pro.testRequestDTO?.requestID != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Request submitted successfully!'),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2), // Show for 2 seconds
                     ),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
-            },
+                  );
 
-            icon: const Icon(Icons.send),
-            label: const Text('Request', style: TextStyle(fontSize: 18)),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                  // Close the screen after 2 seconds
+                  Future.delayed(const Duration(seconds: 2), () {
+                    if (mounted) {
+                      Navigator.of(context).pop(); // Close the current screen
+                    }
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Failed to submit the request. Please try again.',
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+
+              icon: const Icon(Icons.send),
+              label: const Text('Request', style: TextStyle(fontSize: 18)),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ),

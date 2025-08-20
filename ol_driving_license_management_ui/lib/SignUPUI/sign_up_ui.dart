@@ -129,7 +129,7 @@ class _SignUpScreenUIStateState extends State<UISignUp> {
 
     PVBaseCurrentLogin currentLoggedInProvider = context.read<PVSignUp>();
 
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder:
@@ -141,6 +141,7 @@ class _SignUpScreenUIStateState extends State<UISignUp> {
               child: const UIMainScreen(),
             ),
       ),
+      (Route<dynamic> rr) => false,
     );
   }
 

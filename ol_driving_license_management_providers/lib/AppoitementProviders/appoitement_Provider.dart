@@ -12,15 +12,9 @@ class PVTraineeAppoitements extends ChangeNotifier {
       return;
     }
 
-    try {
-      traineeAppoitements =
-          await TraineeAppoitementsConnect.getAllTraineeAppoitements(traineeID);
-    } catch (e) {
-      // Optional: Handle error state if needed
-      traineeAppoitements = [];
-      debugPrint('Error fetching trainee appointments: $e');
-    } finally {
-      notifyListeners();
-    }
+    traineeAppoitements =
+        await TraineeAppoitementsConnect.getAllTraineeAppoitements(traineeID);
+
+    notifyListeners();
   }
 }
