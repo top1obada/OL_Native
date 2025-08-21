@@ -12,6 +12,39 @@ import 'package:ol_driving_license_management_ui/MainUI/main_screen_ui.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  var result = await FileUtils.read();
+
+  if (result != null) {
+    var pv = PVLogin();
+
+    var loginResult = await pv.login(
+      ClsLoginDataDTO(
+        userName: result['username'],
+        password: result['password'],
+      ),
+    );
+
+    if (loginResult) {
+      PVBaseCurrentLogin baseCurrentLogin = pv;
+
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: baseCurrentLogin),
+            ChangeNotifierProvider(create: (context) => PVRetrivingCases()),
+          ],
+          child: MaterialApp(
+            title: 'OL Driving Licence Management',
+            theme: ThemeData(primarySwatch: Colors.blue),
+            home: const UIMainScreen(),
+          ),
+        ),
+      );
+
+      return;
+    }
+  }
+
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => PVLogin())],
