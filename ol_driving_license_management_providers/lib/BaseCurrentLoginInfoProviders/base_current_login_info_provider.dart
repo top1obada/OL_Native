@@ -7,6 +7,7 @@ import 'package:ol_driving_license_management_connect_api/SignUpConnect/sign_up_
 import 'package:ol_driving_license_management_dto/LoginDTOs/current_login_information.dart';
 import 'package:ol_driving_license_management_dto/LoginDTOs/login_dto.dart';
 import 'package:ol_driving_license_management_dto/SignUpDTOs/sign_up_dto.dart';
+import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/registry.dart';
 import 'package:ol_driving_license_management_providers/StaticLibraries/token_library.dart';
 
 class PVBaseCurrentLogin extends ChangeNotifier {
@@ -19,10 +20,10 @@ class PVBaseCurrentLogin extends ChangeNotifier {
     _currentLoginInformationDTO = ClsCurrentLoginInformationDTO();
   }
 
-  void clear() {
+  void clear() async {
     _currentLoginInformationDTO = null;
     DioClient.clearHeaders();
-
+    await FileUtils.clearLoginInfo();
     notifyListeners();
   }
 }
@@ -37,6 +38,7 @@ class PVLogin extends PVBaseCurrentLogin {
       _currentLoginInformationDTO = TokenLibrary.extractLoginInfoFromToken(
         token,
       );
+      await FileUtils.saveLoginInfo(loginData.userName!, loginData.password!);
     }
 
     notifyListeners();
@@ -53,6 +55,10 @@ class PVSignUp extends PVBaseCurrentLogin {
     if (token != null) {
       _currentLoginInformationDTO = TokenLibrary.extractLoginInfoFromToken(
         token,
+      );
+      await FileUtils.saveLoginInfo(
+        signUpData.login!.userName!,
+        signUpData.login!.password!,
       );
     }
 

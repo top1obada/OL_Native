@@ -5,7 +5,7 @@ import 'package:my_widgets/Validators/vd_not_empty.dart';
 import 'package:ol_driving_license_management_dto/LoginDTOs/login_dto.dart';
 import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/base_current_login_info_provider.dart';
 import 'package:ol_driving_license_management_providers/CaseProviders/cases_Retriving_provider.dart';
-import 'package:ol_driving_license_management_ui/Classes/registry.dart';
+
 import 'package:ol_driving_license_management_ui/MainUI/main_screen_ui.dart';
 import 'package:ol_driving_license_management_ui/SignUPUI/sign_up_ui.dart';
 import 'package:provider/provider.dart';
@@ -39,11 +39,6 @@ class _LoginScreenUIState extends State<LoginScreenUI> {
     if (!mounted) return;
 
     if (result) {
-      await FileUtils.saveLoginInfo(
-        usernameController.text,
-        passwordController.text,
-      );
-
       PVBaseCurrentLogin currentLogin = context.read<PVLogin>();
 
       Navigator.pushReplacement(
