@@ -10,10 +10,10 @@ import 'package:ol_driving_license_management_providers/CaseProviders/cases_Retr
 import 'package:ol_driving_license_management_providers/FilesProviders/vision_text_result_file_upload_provider.dart';
 import 'package:ol_driving_license_management_providers/LicensesProviders/GetAllTraineeLicenseProvider.dart';
 import 'package:ol_driving_license_management_providers/RequestsProviders/TestRequestProviders/CreateTestRequestProvider.dart';
+import 'package:ol_driving_license_management_ui/Classes/registry.dart';
 
 import 'package:ol_driving_license_management_ui/LoginUI/login_screen_ui.dart';
 import 'package:ol_driving_license_management_ui/MainUI/main_screen_ui.dart';
-import 'package:ol_driving_license_management_ui/TestRequestUI/TestRequestUI.dart';
 
 import 'package:provider/provider.dart';
 

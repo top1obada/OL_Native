@@ -6,6 +6,7 @@ import 'package:ol_driving_license_management_providers/FilesProviders/vision_te
 import 'package:ol_driving_license_management_providers/LicensesProviders/GetAllTraineeLicenseProvider.dart';
 import 'package:ol_driving_license_management_providers/TraineeProviders/trainee_requests_provider.dart';
 import 'package:ol_driving_license_management_ui/AppoitementUI/show_trainee_appoitements_ui.dart';
+import 'package:ol_driving_license_management_ui/Classes/registry.dart';
 
 import 'package:ol_driving_license_management_ui/LicensesUI/TraineeLicenseUI.dart';
 import 'package:ol_driving_license_management_ui/LoginUI/login_screen_ui.dart';
@@ -225,8 +226,10 @@ class BaseDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.exit_to_app, color: Colors.red),
                 title: const Text('Logout'),
-                onTap: () {
+                onTap: () async {
                   loggedInInfo.clear();
+
+                  await FileUtils.clearLoginInfo();
 
                   Navigator.pushAndRemoveUntil(
                     context,
