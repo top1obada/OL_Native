@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ol_driving_license_management_dto/LoginDTOs/login_dto.dart';
+import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/SecureStorage/secore_storage.dart';
 
 import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/base_current_login_info_provider.dart';
-import 'package:ol_driving_license_management_providers/BaseCurrentLoginInfoProviders/registry.dart';
 
 import 'package:ol_driving_license_management_providers/CaseProviders/cases_Retriving_provider.dart';
 
@@ -12,7 +12,7 @@ import 'package:ol_driving_license_management_ui/MainUI/main_screen_ui.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  var result = await FileUtils.readLoginInfo();
+  var result = await FileUtils.read();
 
   if (result != null) {
     var pv = PVLogin();
