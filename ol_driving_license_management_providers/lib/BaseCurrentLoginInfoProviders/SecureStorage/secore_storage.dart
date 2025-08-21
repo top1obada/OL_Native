@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 
 class FileUtils {
   static String? nativePath;
@@ -7,7 +8,7 @@ class FileUtils {
   static Future<void> _fillNativePath() async {
     if (nativePath == null) {
       final dir = await getApplicationDocumentsDirectory();
-      nativePath = "${dir.path}\\login_info.txt";
+      nativePath = p.join(dir.path, "login_info.txt"); // ✅ cross-platform
     }
   }
 
@@ -15,17 +16,15 @@ class FileUtils {
     await _fillNativePath();
     final file = File(nativePath!);
 
-    // تحقق إذا الملف موجود وفيه نفس البيانات
     if (await file.exists()) {
       final content = await file.readAsString();
       if (content.contains("Username:$username") &&
           content.contains("Password:$password")) {
         print("ℹ️ نفس البيانات موجودة مسبقاً، لن يتم الحفظ");
-        return; // ما يعمل شيء
+        return;
       }
     }
 
-    // إذا مختلف → احفظ
     await file.writeAsString("Username:$username\nPassword:$password");
     print("✅ تم حفظ البيانات بنجاح");
   }
