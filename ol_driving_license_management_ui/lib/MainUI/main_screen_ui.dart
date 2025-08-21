@@ -48,8 +48,6 @@ class _UIMainScreen extends State<UIMainScreen> {
 
       body: ListView(
         children: [
-          Center(child: Text("${FileUtils.nativePath}")),
-          const SizedBox(height: 10),
           WDAccountCard(
             firstName: currentLoggedIn.currentLoginInformationDTO!.firstName!,
             userId: currentLoggedIn.currentLoginInformationDTO!.userID!,
