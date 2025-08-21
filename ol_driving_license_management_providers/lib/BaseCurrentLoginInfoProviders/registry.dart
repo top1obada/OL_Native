@@ -1,34 +1,57 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class FileUtils {
-  // حفظ معلومات تسجيل الدخول
-  static Future<void> saveLoginInfo(String username, String password) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('username') && prefs.containsKey('password')) {
-      print('⚠️ Login info already exists, skipping save.');
-      return;
-    }
-    await prefs.setString('username', username);
-    await prefs.setString('password', password);
-    print('✅ Login info saved in SharedPreferences');
+  static Future<File> _getLocalFile() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File('${directory.path}/LoginInfoData.txt');
   }
 
-  // قراءة معلومات تسجيل الدخول
+  static Future<void> saveLoginInfo(String username, String password) async {
+    try {
+      final file = await _getLocalFile();
+      final content = 'Username:$username\nPassword:$password';
+      await file.writeAsString(content);
+      print('✅ Login info saved: ${file.absolute.path}');
+    } catch (e) {
+      print('❌ Error saving login info: $e');
+    }
+  }
+
   static Future<Map<String, String>?> readLoginInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('username');
-    final password = prefs.getString('password');
-    if (username != null && password != null) {
-      return {'username': username, 'password': password};
+    try {
+      final file = await _getLocalFile();
+      if (await file.exists()) {
+        final content = await file.readAsString();
+        final lines = content.split('\n');
+        String username = '';
+        String password = '';
+        for (var line in lines) {
+          if (line.startsWith('Username:')) {
+            username = line.substring('Username:'.length).trim();
+          } else if (line.startsWith('Password:')) {
+            password = line.substring('Password:'.length).trim();
+          }
+        }
+        if (username.isNotEmpty && password.isNotEmpty) {
+          return {'username': username, 'password': password};
+        }
+      }
+    } catch (e) {
+      print('❌ Error reading login info: $e');
     }
     return null;
   }
 
-  // مسح معلومات تسجيل الدخول
   static Future<void> clearLoginInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    await prefs.remove('password');
-    print('🧹 Login info cleared from SharedPreferences');
+    try {
+      final file = await _getLocalFile();
+      if (await file.exists()) {
+        await file.writeAsString('');
+        print('🧹 Login info cleared');
+      }
+    } catch (e) {
+      print('❌ Error clearing login info: $e');
+    }
   }
 }
