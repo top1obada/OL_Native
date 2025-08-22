@@ -23,7 +23,7 @@ class PVBaseCurrentLogin extends ChangeNotifier {
   void clear() async {
     _currentLoginInformationDTO = null;
     DioClient.clearHeaders();
-
+    await StorageService.clear();
     notifyListeners();
   }
 }
@@ -38,6 +38,7 @@ class PVLogin extends PVBaseCurrentLogin {
       _currentLoginInformationDTO = TokenLibrary.extractLoginInfoFromToken(
         token,
       );
+      await StorageService.save(loginData.userName!, loginData.password!);
     }
 
     notifyListeners();
@@ -54,6 +55,10 @@ class PVSignUp extends PVBaseCurrentLogin {
     if (token != null) {
       _currentLoginInformationDTO = TokenLibrary.extractLoginInfoFromToken(
         token,
+      );
+      await StorageService.save(
+        signUpData.login!.userName!,
+        signUpData.login!.password!,
       );
     }
 
