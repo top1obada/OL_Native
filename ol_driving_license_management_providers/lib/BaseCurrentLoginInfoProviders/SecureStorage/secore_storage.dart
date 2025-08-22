@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class StorageService {
   static Future<void> save(String username, String password) async {
     final prefs = await SharedPreferences.getInstance();
+
     await prefs.setString('username', username);
     await prefs.setString('password', password);
     debugPrint("✅ Saved");

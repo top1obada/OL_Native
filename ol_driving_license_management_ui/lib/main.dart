@@ -15,15 +15,51 @@ void main() async {
 
   try {
     final loginData = await StorageService.read();
-    runApp(MyApp(loginData: loginData));
-  } catch (e) {
+
+    if (loginData == null) {
+      runApp(
+        ChangeNotifierProvider(create: (c) => PVLogin(), child: const MyApp()),
+      );
+      return;
+    }
+
+    PVLogin pvLogin = PVLogin();
+
+    var result = await pvLogin.login(
+      ClsLoginDataDTO(
+        userName: loginData['username']!,
+        password: loginData['password']!,
+      ),
+    );
+
+    if (result) {
+      PVBaseCurrentLogin currentLogin = pvLogin;
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: currentLogin),
+            ChangeNotifierProvider(create: (_) => PVRetrivingCases()),
+          ],
+          child: const MainScreen(),
+        ),
+      );
+      return;
+    }
+
+    runApp(
+      ChangeNotifierProvider(create: (c) => PVLogin(), child: const MyApp()),
+    );
+
+    return;
+  } catch (er) {
     runApp(MaterialApp(home: const Error()));
   }
 }
 
 class Error extends StatelessWidget {
-  const Error({super.key});
+  const Error({super.key, this.e});
 
+  final String? e;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: Scaffold(body: Center(child: Text("Faild"))));
@@ -31,46 +67,26 @@ class Error extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  final Map<String, String>? loginData;
-
-  const MyApp({super.key, this.loginData});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => PVLogin()),
-        ChangeNotifierProvider(create: (_) => PVRetrivingCases()),
-      ],
-      child: MaterialApp(
-        title: 'OL Driving Licence Management',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: FutureBuilder<bool>(
-          future: _tryAutoLogin(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.data == true) {
-              return const UIMainScreen();
-            } else {
-              return const LoginScreenUI();
-            }
-          },
-        ),
-      ),
+    return MaterialApp(
+      title: 'OL Driving Licence Management',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const LoginScreenUI(),
     );
   }
+}
 
-  Future<bool> _tryAutoLogin() async {
-    if (loginData == null) return false;
-    PVLogin loginProvider = PVLogin();
-    var result = await loginProvider.login(
-      ClsLoginDataDTO(
-        userName: loginData!['username']!,
-        password: loginData!['password']!,
-      ),
+class MainScreen extends StatelessWidget {
+  const MainScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "OL Driving License Management",
+      home: const UIMainScreen(),
     );
-    return result;
   }
 }
