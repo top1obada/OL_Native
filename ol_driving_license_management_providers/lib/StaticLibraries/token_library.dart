@@ -39,8 +39,8 @@ class TokenLibrary {
 
     // Parse IsActive from string to boolean
     int? traineeID;
-    if (payload.containsKey('TraineeID') && payload['TraineeID'] != null) {
-      traineeID = int.tryParse(payload['TraineeID'].toString());
+    if (payload.containsKey('BranchID') && payload['BranchID'] != null) {
+      traineeID = int.tryParse(payload['BranchID'].toString());
     }
 
     // Parse JoiningDate from string to DateTime

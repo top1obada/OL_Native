@@ -10,7 +10,7 @@ class LoginConnect {
       final String loginDataJson = jsonEncode(loginData.toJson());
       DioClient.setLoginData(loginDataJson);
 
-      final response = await DioClient.dio.get('Login');
+      final response = await DioClient.dio.get('Login/LoginTrainee');
 
       final String token = response.data.toString();
 
